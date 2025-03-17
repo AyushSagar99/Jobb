@@ -1,4 +1,5 @@
-"use client"
+'use client';
+
 import React, { useState } from 'react'
 import { Button } from "@/components/ui/button"
 import {
@@ -20,27 +21,11 @@ import {
   SelectValue,
 } from "@/components/ui/select"
 import { Textarea } from "@/components/ui/textarea"
-import { PlusCircle, Briefcase, Home, Calendar } from 'lucide-react'
+import { PlusCircle, Briefcase, Settings, Home, Calendar } from 'lucide-react'
+import { useJobApplications } from '@/context/job-context'
 
 function Sidebar() {
-  const [jobApplications, setJobApplications] = useState([
-    { 
-      id: 1, 
-      company: "TechCorp", 
-      position: "Frontend Developer", 
-      stage: "Interview", 
-      dateApplied: "2025-03-10",
-      notes: "Had a great first round, waiting for technical interview"
-    },
-    { 
-      id: 2, 
-      company: "InnovateInc", 
-      position: "React Developer", 
-      stage: "Applied", 
-      dateApplied: "2025-03-15",
-      notes: ""
-    }
-  ]);
+  const { addJobApplication } = useJobApplications();
   
   const [newApplication, setNewApplication] = useState({
     company: "",
@@ -50,7 +35,9 @@ function Sidebar() {
     notes: ""
   });
   
-  const handleInputChange = (e: { target: { name: any; value: any } }) => {
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
+  
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
     setNewApplication({
       ...newApplication,
@@ -58,7 +45,7 @@ function Sidebar() {
     });
   };
   
-  const handleSelectChange = (value: any) => {
+  const handleSelectChange = (value: string) => {
     setNewApplication({
       ...newApplication,
       stage: value
@@ -66,14 +53,7 @@ function Sidebar() {
   };
   
   const handleSubmit = () => {
-    const updatedApplications = [
-      ...jobApplications,
-      { 
-        id: jobApplications.length + 1,
-        ...newApplication
-      }
-    ];
-    setJobApplications(updatedApplications);
+    addJobApplication(newApplication);
     
     // Reset form
     setNewApplication({
@@ -83,6 +63,9 @@ function Sidebar() {
       dateApplied: new Date().toISOString().split('T')[0],
       notes: ""
     });
+    
+    // Close dialog
+    setIsDialogOpen(false);
   };
   
   // Application stages for the dropdown
@@ -94,8 +77,8 @@ function Sidebar() {
     "Interview",
     "Final Interview",
     "Offer",
-    "Rejected",
-    "Accepted"
+    "Accepted",
+    "Rejected"
   ];
 
   return (
@@ -109,7 +92,7 @@ function Sidebar() {
         </div>
         
         <div className='p-4'>
-          <Dialog>
+          <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
             <DialogTrigger asChild>
               <Button className="w-full mb-6" variant="default">
                 <PlusCircle className="mr-2" size={16} />
@@ -232,7 +215,13 @@ function Sidebar() {
           </ul>
         </nav>
         
-        
+        {/* Settings at the bottom */}
+        <div className="p-4 border-t border-slate-700">
+          <Button variant="ghost" className="w-full justify-start text-white">
+            <Settings className="mr-2" size={18} />
+            Settings
+          </Button>
+        </div>
       </div>
     </>
   )
