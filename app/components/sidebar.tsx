@@ -191,37 +191,9 @@ function Sidebar() {
           </Dialog>
         </div>
         
-        {/* Navigation links */}
-        <nav className="flex-1 p-4">
-          <ul className="space-y-2">
-            <li>
-              <Button variant="ghost" className="w-full justify-start text-white">
-                <Home className="mr-2" size={18} />
-                Dashboard
-              </Button>
-            </li>
-            <li>
-              <Button variant="ghost" className="w-full justify-start text-white">
-                <Briefcase className="mr-2" size={18} />
-                Applications
-              </Button>
-            </li>
-            <li>
-              <Button variant="ghost" className="w-full justify-start text-white">
-                <Calendar className="mr-2" size={18} />
-                Interviews
-              </Button>
-            </li>
-          </ul>
-        </nav>
+       
         
-        {/* Settings at the bottom */}
-        <div className="p-4 border-t border-slate-700">
-          <Button variant="ghost" className="w-full justify-start text-white">
-            <Settings className="mr-2" size={18} />
-            Settings
-          </Button>
-        </div>
+        
       </div>
     </>
   )
