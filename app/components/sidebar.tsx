@@ -21,7 +21,7 @@ import {
   SelectValue,
 } from "@/components/ui/select"
 import { Textarea } from "@/components/ui/textarea"
-import { PlusCircle, Briefcase, Settings, Home, Calendar } from 'lucide-react'
+import { PlusCircle, Briefcase } from 'lucide-react'
 import { useJobApplications } from '@/context/job-context'
 
 function Sidebar() {
